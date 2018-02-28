@@ -56,11 +56,13 @@ Store.prototype.deleteTask = function(id) {
   const store = new Store();
   const tasks = store.getTasks();
 
-  tasks.forEach(function(task) {
+  tasks.forEach(function(task, index) {
     if(task.id === id) {
-      localStorage.removeItem('tasks', JSON.stringify(task));
+      tasks.splice(index, 1);
     }
   });
+
+  localStorage.setItem('tasks', JSON.stringify(tasks));
 };
 
 // UI Methods
@@ -127,11 +129,15 @@ document.getElementById('task-list').addEventListener('click', function(e) {
   const store = new Store();
   const ui = new UI();
 
-  if(e.target.classList.contains('fa-edit')) {
+  const edit = e.target.classList.contains('fa-edit');
+  const del = e.target.classList.contains('fa-trash-alt');
+
+  const id = e.target.parentElement.previousElementSibling.previousElementSibling.textContent;
+
+  if(edit) {
     ui.editTask(e.target);
   }
-  else {
-    const id = e.target.parentElement.previousElementSibling.previousElementSibling.textContent;
+  if(del) {
     ui.removeTask(e.target);
     store.deleteTask(id);
   }
