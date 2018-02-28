@@ -29,9 +29,9 @@ Store.prototype.genId = function() {
 
     digit = getRandomDigit(0, 9);
     digitsArr.push(digit);
-    i++
+    i++;
   }
-  
+
   function getRandomDigit(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -107,7 +107,7 @@ UI.prototype.removeTask = function(target) {
 document.getElementById('add-task').addEventListener('submit', function(e) {
   const store = new Store();
   const ui = new UI();
-  
+
   const [taskName, dueDate, priority] = [
     document.getElementById('task-name').value,
     document.getElementById('task-due-date').value,
