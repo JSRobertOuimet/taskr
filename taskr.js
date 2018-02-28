@@ -1,9 +1,12 @@
-function Task(name, dueDate, priority) {
+function Task(id, name, dueDate, priority, done) {
+  this.id = id;
   this.name = name;
   this.dueDate = dueDate;
   this.priority = priority;
+  this.done = false;
 }
 
+// Local Storage Methods
 function Store() {}
 
 Store.prototype.getTasks = function() {
@@ -16,6 +19,31 @@ Store.prototype.getTasks = function() {
   return tasks;
 };
 
+Store.prototype.genId = function() {
+  let id;
+  const digitsArr = [];
+  let i = 0;
+
+  while(i < 40) {
+    let digit;
+
+    digit = getRandomDigit(0, 9);
+    digitsArr.push(digit);
+    i++
+  }
+  
+  function getRandomDigit(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  id = digitsArr.join('');
+
+  return id;
+};
+
 Store.prototype.addTask = function(task) {
   const store = new Store();
   const tasks = store.getTasks();
@@ -24,7 +52,21 @@ Store.prototype.addTask = function(task) {
   localStorage.setItem('tasks', JSON.stringify(tasks));
 };
 
-Store.prototype.displayTasks = function() {
+Store.prototype.deleteTask = function(id) {
+  const store = new Store();
+  const tasks = store.getTasks();
+
+  tasks.forEach(function(task) {
+    if(task.id === id) {
+      localStorage.removeItem('tasks', JSON.stringify(task));
+    }
+  });
+};
+
+// UI Methods
+function UI() {}
+
+UI.prototype.displayTasks = function() {
   const store = new Store();
   const ui = new UI();
 
@@ -35,34 +77,44 @@ Store.prototype.displayTasks = function() {
   });
 };
 
-function UI() {}
-
 UI.prototype.listNewTask = function(task) {
   const taskList = document.querySelector('.list-group.list-group-flush');
   const newTask = document.createElement('li');
 
   newTask.className = 'list-group-item';
   newTask.innerHTML = `
-    ${task.name}
-    <span class="pull-right">
+    <span style="display: none">${task.id}</span>
+    <span>${task.name} <small class="text-muted ml-3">${task.dueDate}</small></span>
+    <span class="float-right">
       <i class="far fa-edit mr-3"></i>
       <i class="far fa-trash-alt text-danger"></i>
-    </span>
-  `;
+    </span>`;
 
   taskList.appendChild(newTask);
 };
 
+UI.prototype.editTask = function(target) {
+  console.log(target);
+};
+
+UI.prototype.removeTask = function(target) {
+  const liElem = target.parentElement.parentElement;
+
+  liElem.remove();
+};
+
+// Add task
 document.getElementById('add-task').addEventListener('submit', function(e) {
+  const store = new Store();
+  const ui = new UI();
+  
   const [taskName, dueDate, priority] = [
     document.getElementById('task-name').value,
     document.getElementById('task-due-date').value,
     document.getElementById('task-priority').value
   ];
 
-  const task = new Task(taskName, dueDate, priority);
-  const store = new Store();
-  const ui = new UI();
+  const task = new Task(store.genId(), taskName, dueDate, priority);
 
   store.addTask(task);
   ui.listNewTask(task);
@@ -70,11 +122,26 @@ document.getElementById('add-task').addEventListener('submit', function(e) {
   // e.preventDefault();
 });
 
+// Edit || delete
+document.getElementById('task-list').addEventListener('click', function(e) {
+  const store = new Store();
+  const ui = new UI();
+
+  if(e.target.classList.contains('fa-edit')) {
+    ui.editTask(e.target);
+  }
+  else {
+    const id = e.target.parentElement.previousElementSibling.previousElementSibling.textContent;
+    ui.removeTask(e.target);
+    store.deleteTask(id);
+  }
+});
+
 // Initialization
 (function() {
-  const store = new Store();
+  const ui = new UI();
 
-  document.addEventListener('DOMContentLoaded', store.displayTasks);
+  document.addEventListener('DOMContentLoaded', ui.displayTasks);
 
   window.addEventListener('load', function() {
     let form = document.querySelectorAll('.needs-validation');

@@ -1,0 +1,12 @@
+.with-validation {
+  position: relative;
+}
+.list-group-item .float-right {
+  visibility: hidden;
+}
+.list-group-item:hover .float-right {
+  visibility: visible;
+}
+i {
+  cursor: pointer;
+}

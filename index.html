@@ -5,29 +5,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
-	<style>
-		.with-validation {
-			position: relative;
-		}
-		.list-group-item span {
-			visibility: hidden;
-		}
-		.list-group-item:hover span {
-			visibility: visible;
-		}
-	</style>
+	<link rel="stylesheet" href="taskr.css">
 	<title>Taskr</title>
 </head>
 <body>
-	<div class="container-fluid">
-		<nav class="navbar navbar-light bg-light justify-content-between">
-			<a class="navbar-brand">Taskr</a>
-			<form class="form-inline">
-				<button type="button" class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal" data-target="#add-task">Add Task...</button>
-			</form>
-		</nav>
-
-		<ul class="list-group list-group-flush"></ul>
+	<nav class="navbar navbar-light bg-light justify-content-between">
+		<a class="navbar-brand">Taskr</a>
+		<form class="form-inline">
+			<button type="button" class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal" data-target="#add-task">Add Task</button>
+		</form>
+	</nav>
+	<div class="container">
+		<ul id="task-list" class="list-group list-group-flush"></ul>
 	</div>
 
 	<div id="add-task" class="modal" tabindex="-1" role="dialog">
@@ -60,13 +49,12 @@
 								<option>High</option>
 							</select>
 						</div>
-						<div class="pull-right">
+						<div class="float-right">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 							<button type="submit" class="btn btn-primary">Add Task</button>
 						</div>
 					</form>
 				</div>
-
 			</div>
 		</div>
 	</div>
