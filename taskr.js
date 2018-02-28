@@ -57,7 +57,21 @@ Store.prototype.addTask = function(task) {
   store.updateTasks(tasks);
 };
 
-// Refactor to toggle method!
+// Store.prototype.toggleDoneState = function(id) {
+//   const store = new Store();
+//   const tasks = store.getTasks();
+
+//   tasks.forEach(function(task) {
+//     if(tasks.id === id) {
+//       task.done = (task.done === false) ?
+//         task.done = true :
+//         task.done = false;
+//     }
+//   });
+
+//   store.updateTasks(tasks);
+// };
+
 Store.prototype.checkmarkTask = function(id) {
   const store = new Store();
   const tasks = store.getTasks();
@@ -65,7 +79,6 @@ Store.prototype.checkmarkTask = function(id) {
   tasks.forEach(function(task) {
     if(task.id === id) {
       task.done = true;
-      task.opacity = '0.2';
     }
   });
 
@@ -79,7 +92,6 @@ Store.prototype.undoTask = function(id) {
   tasks.forEach(function(task) {
     if(task.id === id) {
       task.done = false;
-      task.opacity = '1';
     }
   });
 
@@ -109,20 +121,23 @@ UI.prototype.displayTasks = function() {
   const tasks = store.getTasks();
 
   tasks.forEach(function(task) {
-    ui.addTask(task, task.opacity);
+    ui.addTask(task);
   });
 };
 
-UI.prototype.addTask = function(task, opacity) {
+UI.prototype.addTask = function(task) {
   const taskList = document.querySelector('.list-group.list-group-flush');
   const newTask = document.createElement('li');
 
-  let stateIcon;
+  let doneOrNotIcon;
 
   newTask.className = 'list-group-item';
-  newTask.style.opacity = opacity;
 
-  stateIcon = (task.done === false) ?
+  newTask.style.opacity = (task.done === false) ?
+    newTask.style.opacity = '1' :
+    newTask.style.opacity = '0.2';
+
+  doneOrNotIcon = (task.done === false) ?
     `<i class="fas fa-check mr-3 text-success"></i>` :
     `<i class="fa fa-undo mr-3"></i>`;
 
@@ -130,7 +145,7 @@ UI.prototype.addTask = function(task, opacity) {
     <span style="display: none">${task.id}</span>
     <span>${task.name} <small class="text-muted ml-3">${task.dueDate}</small></span>
     <span class="float-right">
-      ${stateIcon}
+      ${doneOrNotIcon}
       <i class="far fa-edit mr-3"></i>
       <i class="far fa-trash-alt text-danger"></i>
     </span>`;
@@ -176,7 +191,7 @@ document.getElementById('add-task').addEventListener('submit', function() {
   const task = new Task(store.genId(), taskName, dueDate, priority);
 
   store.addTask(task);
-  ui.addTask(task, task.opacity);
+  ui.addTask(task);
 });
 
 // Checkmark, edit or delete task
@@ -192,6 +207,7 @@ document.getElementById('task-list').addEventListener('click', function(e) {
     e.target.parentElement.previousElementSibling.previousElementSibling.textContent
   ];
 
+  // Switch statement?
   if(done) {
     ui.checkmarkTask(e.target);
     store.checkmarkTask(id);
