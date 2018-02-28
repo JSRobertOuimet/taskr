@@ -57,21 +57,6 @@ Store.prototype.addTask = function(task) {
   store.updateTasks(tasks);
 };
 
-// Store.prototype.toggleDoneState = function(id) {
-//   const store = new Store();
-//   const tasks = store.getTasks();
-
-//   tasks.forEach(function(task) {
-//     if(tasks.id === id) {
-//       task.done = (task.done === false) ?
-//         task.done = true :
-//         task.done = false;
-//     }
-//   });
-
-//   store.updateTasks(tasks);
-// };
-
 Store.prototype.checkmarkTask = function(id) {
   const store = new Store();
   const tasks = store.getTasks();
@@ -137,12 +122,27 @@ UI.prototype.addTask = function(task) {
     newTask.style.opacity = '1' :
     newTask.style.opacity = '0.2';
 
+  // switch(task.priority) {
+  //   case 'None':
+  //     priority = '';
+  //     break;
+  //   case 'Low':
+  //     priority = '!';
+  //     break;
+  //   case 'Medium':
+  //     priority = '!!';
+  //     break;
+  //   case 'High':
+  //     priority = '!!!';
+  //     break;
+  // }
+
   doneOrNotIcon = (task.done === false) ?
     `<i class="fas fa-check mr-3 text-success"></i>` :
     `<i class="fa fa-undo mr-3"></i>`;
 
   newTask.innerHTML = `
-    <span style="display: none">${task.id}</span>
+    <span class="id">${task.id}</span>
     <span>${task.name} <small class="text-muted ml-3">${task.dueDate}</small></span>
     <span class="float-right">
       ${doneOrNotIcon}
