@@ -1,8 +1,10 @@
-function Task(id, name, dueDate, priority) {
+function Task(id, name, dueDate, recurrence, priority) {
   this.id = id;
   this.name = name;
   this.dueDate = dueDate;
+  this.recurrence = recurrence;
   this.priority = priority;
+
   this.done = false;
   this.opacity = '1';
 }
@@ -114,13 +116,27 @@ UI.prototype.addTask = function(task) {
   const taskList = document.querySelector('.list-group.list-group-flush');
   const newTask = document.createElement('li');
 
-  let doneOrNotIcon;
+  let doneOrNotIcon,
+      priority;
 
   newTask.className = 'list-group-item';
 
   newTask.style.opacity = (task.done === false) ?
     newTask.style.opacity = '1' :
     newTask.style.opacity = '0.2';
+
+  // if(task.priority === 'None') {
+  //   priority = '';
+  // }
+  // if(task.priority === 'Low') {
+  //   priority = '!';
+  // }
+  // if(task.priority === 'Medium') {
+  //   priority = '!!';
+  // }
+  // if(task.priority === 'High') {
+  //   priority = '!!!';
+  // }
 
   // switch(task.priority) {
   //   case 'None':
@@ -182,13 +198,14 @@ document.getElementById('add-task').addEventListener('submit', function() {
   const store = new Store();
   const ui = new UI();
 
-  const [taskName, dueDate, priority] = [
+  const [taskName, dueDate, recurrence, priority] = [
     document.getElementById('task-name').value,
     document.getElementById('task-due-date').value,
+    document.getElementById('task-recurrence').value,
     document.getElementById('task-priority').value
   ];
 
-  const task = new Task(store.genId(), taskName, dueDate, priority);
+  const task = new Task(store.genId(), taskName, dueDate, recurrence, priority);
 
   store.addTask(task);
   ui.addTask(task);
