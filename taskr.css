@@ -2,12 +2,19 @@
   position: relative;
 }
 
-.list-group-item .float-right {
+.list-group-item .actions {
   visibility: hidden;
 }
 
-.list-group-item:hover .float-right {
+.list-group-item:hover .actions {
   visibility: visible;
+}
+
+.actions {
+  position: absolute;
+  right: 0;
+  width: auto;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .id {

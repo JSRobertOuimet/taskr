@@ -9,6 +9,21 @@ function Task(id, name, dueDate, recurrence, priority) {
   this.opacity = '1';
 }
 
+// Time Methods
+function Time() {
+  this.time = new Date();
+}
+
+Time.prototype.getToday = function() {
+  const today = {
+    date: this.time.getDate(),
+    month: this.time.getMonth(),
+    year: this.time.getFullYear()
+  };
+
+  return `${today.year}-${today.month + 1}-${today.date}`;
+};
+
 // Local Storage Methods
 function Store() {}
 
@@ -160,7 +175,7 @@ UI.prototype.addTask = function(task) {
   newTask.innerHTML = `
     <span class="id">${task.id}</span>
     <span>${task.name} <small class="text-muted ml-3">${task.dueDate}</small></span>
-    <span class="float-right">
+    <span class="float-right actions">
       ${doneOrNotIcon}
       <i class="far fa-edit mr-3"></i>
       <i class="far fa-trash-alt text-danger"></i>
