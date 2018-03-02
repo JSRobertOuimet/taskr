@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
-	<link rel="stylesheet" href="taskr.css">
+	<link rel="stylesheet" href="app.css">
 	<title>Taskr</title>
 </head>
 <body>
@@ -69,10 +69,63 @@
 		</div>
 	</div>
 
+	<div id="edit-task" class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Edit Task</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="edit-task" class="needs-validation" novalidate>
+						<div class="form-group with-validation">
+							<label for="e-task-name">Name</label>
+							<input type="text" class="form-control" id="e-task-name" aria-describedby="task-name" placeholder="Name" required>
+							<div class="invalid-tooltip">Please give your task a name.</div>
+						</div>
+						<div class="form-group with-validation">
+							<label for="e-task-due-date">Due Date</label>
+							<input type="date" class="form-control" id="e-task-due-date" placeholder="Due Date" required>
+							<div class="invalid-tooltip">Please give your task a due date.</div>
+						</div>
+						<div class="form-group">
+							<label for="e-task-recurrence">Recurrence</label>
+							<select class="form-control" id="e-task-recurrence">
+								<option>None</option>
+								<option>Daily</option>
+								<option>Weekly</option>
+								<option>Monthly</option>
+								<option>Yearly</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="e-task-priority">Priority</label>
+							<select class="form-control" id="e-task-priority">
+								<option>None</option>
+								<option>Low</option>
+								<option>Medium</option>
+								<option>High</option>
+							</select>
+						</div>
+						<div class="float-right">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary">Edit Task</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-	<script src="taskr.js"></script>
+	<script src="time.js"></script>
+	<script src="storage.js"></script>
+	<script src="ui.js"></script>
+	<script src="app.js"></script>
 </body>
 </html>
