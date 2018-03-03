@@ -61,18 +61,19 @@ UI.prototype.addTask = function(task) {
     <span>${task.name} <small class="text-muted ml-3">${task.dueDate}</small></span>
     <span class="float-right actions">
       ${doneOrNotIcon}
-      <i class="far fa-edit mr-3" data-toggle="modal" data-target="#edit-task"></i>
+      <i class="far fa-edit mr-3" data-toggle="modal" data-target="#edit-task-modal"></i>
       <i class="far fa-trash-alt text-danger"></i>
     </span>`;
 
   taskList.appendChild(newTask);
 };
 
-UI.prototype.getTaskValues = function(id) {
+UI.prototype.fillEditForm = function(id) {
   const store = new Store();
   const tasks = store.getTasks();
 
-  let [taskName, dueDate, recurrence, priority] = [
+  let [taskID, taskName, dueDate, recurrence, priority] = [
+    document.getElementById('e-task-id'),
     document.getElementById('e-task-name'),
     document.getElementById('e-task-due-date'),
     document.getElementById('e-task-recurrence'),
@@ -82,11 +83,13 @@ UI.prototype.getTaskValues = function(id) {
   tasks.forEach(function(task) {
     if(task.id === id) {
       [
+        taskID.value,
         taskName.value,
         dueDate.value,
         recurrence.value,
         priority.value
       ] = [
+        task.id,
         task.name,
         task.dueDate,
         task.recurrence,

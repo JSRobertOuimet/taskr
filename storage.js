@@ -47,11 +47,18 @@ Store.prototype.addTask = function(task) {
   store.updateTasks(tasks);
 };
 
-Store.prototype.editTask = function(id) {
+Store.prototype.editTask = function(editedTask) {
   const store = new Store();
   const tasks = store.getTasks();
 
+  tasks.forEach(function(task, index) {
+    if(task.id === editedTask.id) {
+      tasks.splice(index, 1);
+    }
+  });
 
+  tasks.push(editedTask);
+  store.updateTasks(tasks);
 };
 
 Store.prototype.checkmarkTask = function(id) {
