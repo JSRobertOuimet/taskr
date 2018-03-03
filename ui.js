@@ -1,10 +1,12 @@
-function UI() {}
+function UI() {
+  this.taskList = document.querySelector('.list-group.list-group-flush');
+}
 
-UI.prototype.displayTasks = function() {
+UI.prototype.displayAllTasks = function() {
   const store = new Store();
   const ui = new UI();
 
-  const tasks = store.getTasks();
+  const tasks = store.getAllTasks();
 
   tasks.forEach(function(task) {
     ui.displayTask(task);
@@ -13,7 +15,6 @@ UI.prototype.displayTasks = function() {
 
 UI.prototype.displayTask = function(task) {
   const time = new Time();
-  const taskList = document.querySelector('.list-group.list-group-flush');
   const newTask = document.createElement('li');
 
   let doneOrNotIcon,
@@ -70,12 +71,12 @@ UI.prototype.displayTask = function(task) {
       <i class="far fa-trash-alt text-danger"></i>
     </span>`;
 
-  taskList.appendChild(newTask);
+  this.taskList.appendChild(newTask);
 };
 
 UI.prototype.fillEditForm = function(id) {
   const store = new Store();
-  const tasks = store.getTasks();
+  const tasks = store.getAllTasks();
 
   let [taskID, taskName, dueDate, recurrence, priority] = [
     document.getElementById('e-task-id'),
@@ -104,17 +105,17 @@ UI.prototype.fillEditForm = function(id) {
   });
 };
 
-UI.prototype.checkmarkTask = function(target) {
+UI.prototype.markAsDoneTask = function(target) {
   const liElem = target.parentElement.parentElement;
 
-  target.className = 'fa fa-undo mr-3';
+  target.className = 'fa fa-undo text-dark mr-3';
   liElem.style.opacity = '0.2';
 };
 
 UI.prototype.undoTask = function(target) {
   const liElem = target.parentElement.parentElement;
 
-  target.className = 'fa fa-check mr-3 text-success';
+  target.className = 'fa fa-check text-success mr-3';
   liElem.style.opacity = '1';
 };
 

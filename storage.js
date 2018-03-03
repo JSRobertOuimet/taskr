@@ -1,6 +1,6 @@
 function Store() {}
 
-Store.prototype.getTasks = function() {
+Store.prototype.getAllTasks = function() {
   let tasks;
 
   tasks = localStorage.getItem('tasks') === null ?
@@ -11,9 +11,9 @@ Store.prototype.getTasks = function() {
 };
 
 Store.prototype.genId = function() {
-  let id;
   const digitsArr = [];
-  let i = 0;
+  let id,
+      i = 0;
 
   while(i < 40) {
     let digit;
@@ -41,7 +41,7 @@ Store.prototype.updateTasks = function(tasks) {
 
 Store.prototype.addTask = function(task) {
   const store = new Store();
-  const tasks = store.getTasks();
+  const tasks = store.getAllTasks();
 
   tasks.push(task);
   store.updateTasks(tasks);
@@ -49,7 +49,7 @@ Store.prototype.addTask = function(task) {
 
 Store.prototype.editTask = function(editedTask) {
   const store = new Store();
-  const tasks = store.getTasks();
+  const tasks = store.getAllTasks();
 
   // Update existing task w/o removing it first?
   tasks.forEach(function(task, index) {
@@ -62,9 +62,9 @@ Store.prototype.editTask = function(editedTask) {
   store.updateTasks(tasks);
 };
 
-Store.prototype.checkmarkTask = function(id) {
+Store.prototype.markAsDoneTask = function(id) {
   const store = new Store();
-  const tasks = store.getTasks();
+  const tasks = store.getAllTasks();
 
   tasks.forEach(function(task) {
     if(task.id === id) {
@@ -77,7 +77,7 @@ Store.prototype.checkmarkTask = function(id) {
 
 Store.prototype.undoTask = function(id) {
   const store = new Store();
-  const tasks = store.getTasks();
+  const tasks = store.getAllTasks();
 
   tasks.forEach(function(task) {
     if(task.id === id) {
@@ -90,7 +90,7 @@ Store.prototype.undoTask = function(id) {
 
 Store.prototype.deleteTask = function(id) {
   const store = new Store();
-  const tasks = store.getTasks();
+  const tasks = store.getAllTasks();
 
   tasks.forEach(function(task, index) {
     if(task.id === id) {

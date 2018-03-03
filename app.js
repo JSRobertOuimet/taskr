@@ -2,7 +2,7 @@
 (function() {
   const ui = new UI();
 
-  document.addEventListener('DOMContentLoaded', ui.displayTasks);
+  document.addEventListener('DOMContentLoaded', ui.displayAllTasks);
 
   window.addEventListener('load', function() {
     let form = document.querySelectorAll('.needs-validation');
@@ -36,7 +36,7 @@ function addTask() {
   const task = new Task(store.genId(), taskName, dueDate, recurrence, priority);
 
   store.addTask(task);
-  ui.addTask(task);
+  ui.displayTask(task);
 }
 
 // Edit task
@@ -75,8 +75,8 @@ document.getElementById('task-list').addEventListener('click', function(e) {
 
   // Switch statement?
   if(done) {
-    ui.checkmarkTask(e.target);
-    store.checkmarkTask(id);
+    ui.markAsDoneTask(e.target);
+    store.markAsDoneTask(id);
   }
   if(undo) {
     ui.undoTask(e.target);
