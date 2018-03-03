@@ -51,6 +51,7 @@ Store.prototype.editTask = function(editedTask) {
   const store = new Store();
   const tasks = store.getTasks();
 
+  // Update existing task w/o removing it first?
   tasks.forEach(function(task, index) {
     if(task.id === editedTask.id) {
       tasks.splice(index, 1);

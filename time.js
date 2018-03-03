@@ -4,10 +4,17 @@ function Time() {
 
 Time.prototype.getToday = function() {
   const today = {
-    date: this.time.getDate(),
-    month: this.time.getMonth(),
+    date: parseValue(this.time.getDate()),
+    month: parseValue(this.time.getMonth() + 1),
     year: this.time.getFullYear()
   };
 
-  return `${today.year}-${today.month + 1}-${today.date}`;
+  return `${today.year}-${today.month}-${today.date}`;
+
+  function parseValue(value) {
+    if(value < 10) {
+      value = "0" + value;
+    }
+    return value;
+  }
 };

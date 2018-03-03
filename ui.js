@@ -7,11 +7,12 @@ UI.prototype.displayTasks = function() {
   const tasks = store.getTasks();
 
   tasks.forEach(function(task) {
-    ui.addTask(task);
+    ui.displayTask(task);
   });
 };
 
-UI.prototype.addTask = function(task) {
+UI.prototype.displayTask = function(task) {
+  const time = new Time();
   const taskList = document.querySelector('.list-group.list-group-flush');
   const newTask = document.createElement('li');
 
@@ -19,6 +20,10 @@ UI.prototype.addTask = function(task) {
       priority;
 
   newTask.className = 'list-group-item';
+
+  if(task.dueDate === time.getToday()) {
+    newTask.className += ' font-weight-bold text-danger';
+  }
 
   newTask.style.opacity = (task.done === false) ?
     newTask.style.opacity = '1' :
@@ -61,7 +66,7 @@ UI.prototype.addTask = function(task) {
     <span>${task.name} <small class="text-muted ml-3">${task.dueDate}</small></span>
     <span class="float-right actions">
       ${doneOrNotIcon}
-      <i class="far fa-edit mr-3" data-toggle="modal" data-target="#edit-task-modal"></i>
+      <i class="far fa-edit text-dark mr-3" data-toggle="modal" data-target="#edit-task-modal"></i>
       <i class="far fa-trash-alt text-danger"></i>
     </span>`;
 
